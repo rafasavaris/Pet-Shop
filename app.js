@@ -26,4 +26,8 @@ async function iniciar() {
     });
 }
 
+app.get("/", async (req, res) => {
+  res.render("public/index")
+})
+
 iniciar();
