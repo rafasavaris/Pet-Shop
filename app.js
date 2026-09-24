@@ -36,6 +36,10 @@ app.get("/", async (req, res) => {
   res.render("public/index");
 });
 
+app.get("/agendamento", async (req, res) => {
+  res.render("cliente/agendamento");
+});
+
 app.post("/agendamento", async (req, res) => {
   let { nome, telefone, endereco, nome_do_pet, servico, data, hora } = req.body;
 
