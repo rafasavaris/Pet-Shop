@@ -3,35 +3,40 @@
     <head>
         <meta charset="UTF-8">
         <title>Agendamento</title>
+        <link rel="stylesheet" href="/css/style.css">
     </head>
     <body>
-        <h1>Agendamento</h1>
-        <form action="/agendamento" method="POST">
-            <div>
+        <section class="agendamento">
+        <div class="agendamento-header">
+            <h1>Agendamento de Banho e Tosa</h1>
+            <p>Agende seu serviço de banho e tosa para o seu pet</p>
+        </div>
+        <form class = "agendamento-form" action="/agendamento" method="POST">
+            <div class="campo">
                 <label for="nome">Nome:</label>
                 <input type="text" name="nome" placeholder="Digite seu nome">
             </div>
-            <div>
+            <div class="campo">
                 <label for="telefone">Telefone:</label>
                 <input type="text" name="telefone" placeholder="Digite seu telefone">
             </div>
-            <div>
+            <div class="campo">
                 <label for="endereco">Endereço:</label>
                 <input type="text" name="endereco" placeholder="Digite seu endereço">
             </div>
-            <div>
+            <div class="campo">
                 <label for="nome_do_pet">Nome do Pet:</label>
                 <input type="text" name="nome_do_pet" placeholder="Digite o nome do seu pet">
             </div>
-            <div>
+            <div class="campo">
                 <label for="data">Data:</label>
                 <input type="date" name="data">
             </div>
-            <div>
+            <div class="campo">
                 <label for="hora">Hora:</label>
                 <input type="time" name="hora">
             </div>
-            <div>
+            <div class="campo">
                 <label for="servico">Serviço:</label>
                 <select name="servico">
                     <option value="banho">Banho</option>
@@ -44,4 +49,7 @@
             </div>
 
         </form>
+        </section>
+        
+        
     </body>
