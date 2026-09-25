@@ -30,4 +30,16 @@ app.get("/", async (req, res) => {
   res.render("public/index")
 })
 
+app.get("/admin", async (req, res) => {
+    res.render("admin/adminHome")
+})
+
+app.get("/listaPetAgenda", async (req, res) => {
+    res.render("admin/listaAgenda")
+})
+
+app.get("/ajustaPetAgenda", async (req, res) => {
+    res.render("admin/ajustaAgenda")
+})
+
 iniciar();
