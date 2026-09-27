@@ -2,6 +2,7 @@ const express = require("express");
 const { engine } = require("express-handlebars");
 
 const { iniciarBD, getBD, iniciarAgenda } = require("./mongodb.js");
+const { entrar, verificarLogin, sair } = require("./autenticacao.js");
 
 const app = express();
 
@@ -18,11 +19,23 @@ app.get("/", async (req, res) => {
   res.render("public/index")
 })
 
-app.get("/admin", async (req, res) => {
+app.get("/login", async (req, res) => {
+    res.render("login/login")
+})
+
+app.post("/login", entrar)
+
+app.get("/logout", sair)
+
+app.get("/painelAdmin", verificarLogin, async (req, res) => {
+    res.render("login/painel", { email: req.usuarioAdmin.email })
+})
+
+app.get("/admin", verificarLogin, async (req, res) => {
     res.render("admin/adminHome")
 })
 
-app.get("/listaPetAgenda", async (req, res) => {
+app.get("/listaPetAgenda", verificarLogin, async (req, res) => {
     const BD = getBD();
 
     const agendamentos = await BD.collection("agendamentos").find({}).toArray();
@@ -38,7 +51,7 @@ app.get("/listaPetAgenda", async (req, res) => {
     res.render("admin/listaAgenda", { tabela })
 })
 
-app.post("/ajustaPetAgenda", async (req, res) => {
+app.post("/ajustaPetAgenda", verificarLogin, async (req, res) => {
     const BD = getBD();
     const horarios = ["08", "09", "10", "11", "14", "15", "16", "17"];
     const configuracoes = [];
@@ -63,7 +76,7 @@ app.post("/ajustaPetAgenda", async (req, res) => {
     res.redirect("/ajustaPetAgenda");
 });
 
-app.get("/ajustaPetAgenda", async (req, res) => {
+app.get("/ajustaPetAgenda", verificarLogin, async (req, res) => {
     const BD = getBD();
     let configuracoes = await BD.collection("agenda").find({}).toArray();
 
