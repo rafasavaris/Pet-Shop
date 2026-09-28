@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <title>Horários disponíveis</title>
+        <link rel="stylesheet" href="/css/style.css">
+    </head>
+
+    <body>
+        <section class="widget">
+            <div class="agendamento-header">
+                <h1>Horários disponíveis</h1>
+                <p>Confira os horários livres para os próximos sete dias.</p>
+            </div>
+
+            <div id="horarios"></div>
+
+            <nav class="admin-nav">
+                <a class="admin-link" href="/agendamento">Voltar para o agendamento</a>
+                <a class="admin-link" href="/">Voltar para a página inicial</a>
+            </nav>
+        </section>
+
+        <script>
+            const horarios = document.getElementById("horarios");
+            const hoje = new Date();
+            const diasSemana = [
+                "Domingo",
+                "Segunda-feira",
+                "Terça-feira",
+                "Quarta-feira",
+                "Quinta-feira",
+                "Sexta-feira",
+                "Sábado"
+            ];
+
+            async function carregarAgenda() {
+                horarios.innerHTML = "<p>Carregando horários...</p>";
+
+                let agenda = "";
+
+                for(let i = 0; i < 7; i++) {
+                    const data = new Date(hoje);
+                    data.setDate(hoje.getDate() + i);
+
+                    const ano = data.getFullYear();
+                    const mes = String(data.getMonth() + 1).padStart(2, "0");
+                    const dia = String(data.getDate()).padStart(2, "0");
+                    const dataConsulta = ano + "-" + mes + "-" + dia;
+
+                    const resposta = await fetch("/horarios-disponiveis?data=" + dataConsulta);
+                    const horariosDisponiveis = await resposta.json();
+
+                    agenda += "<h2>" + diasSemana[data.getDay()] + " - " + dia + "/" + mes + "</h2>";
+
+                    let quantidadeHorariosDisponiveis = 0;
+
+                    for(let j = 0; j < horariosDisponiveis.length; j++) {
+                        const horario = horariosDisponiveis[j];
+
+                        if(i === 0 && Number(horario) <= hoje.getHours()) {
+                            continue;
+                        }
+
+                        agenda += "<p>" + horario + ":00</p>";
+                        quantidadeHorariosDisponiveis++;
+                    }
+
+                    if(quantidadeHorariosDisponiveis === 0) {
+                        agenda += "<p>Não há horários disponíveis.</p>";
+                    }
+                }
+
+                horarios.innerHTML = agenda;
+            }
+
+            carregarAgenda();
+        </script>
+    </body>
+</html>
