@@ -96,3 +96,35 @@ O sistema estará disponível em:
 ```text
 http://localhost:3000
 ```
+
+## Login administrativo com MongoDB
+
+O login administrativo utiliza o mesmo MongoDB do projeto. Os usuários ficam na coleção `usuarios`, as senhas são armazenadas como hash bcrypt e as sessões ficam na coleção `sessoes`.
+
+Antes da primeira execução, copie `.env.example` para um novo arquivo chamado `.env` e ajuste os valores:
+
+```env
+SESSION_SECRET=coloque-uma-chave-longa-e-aleatoria
+ADMIN_USUARIO=admin
+ADMIN_SENHA=coloque-uma-senha-forte
+```
+
+O arquivo `.env` é ignorado pelo Git e não deve ser enviado ao repositório. Quando a coleção `usuarios` ainda está vazia, a aplicação cria o primeiro administrador com os dados de `ADMIN_USUARIO` e `ADMIN_SENHA`. A senha é convertida em hash antes de ser gravada.
+
+Depois de iniciar normalmente com `node app.js`, acesse:
+
+```text
+http://localhost:3000/login
+```
+
+### Fluxo da autenticação
+
+1. O formulário envia o usuário e a senha para `POST /login`.
+2. O servidor procura o usuário na coleção `usuarios`.
+3. O bcrypt compara a senha informada com o hash armazenado.
+4. Se estiver correta, o Express cria uma sessão.
+5. O `connect-mongo` grava a sessão na coleção `sessoes`.
+6. O navegador recebe somente um cookie identificador; a senha nunca vai para o cookie.
+7. Um middleware permite acessar as rotas administrativas somente com uma sessão de administrador válida.
+
+As rotas `/admin`, `/listaPetAgenda` e `/ajustaPetAgenda` são protegidas. O logout destrói a sessão e remove o cookie.
