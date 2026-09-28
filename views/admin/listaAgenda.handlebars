@@ -9,10 +9,23 @@
             <th>Horário</th>
             <th>Cliente</th>
             <th>Telefone</th>
+            <th>Endereço</th>
+            <th>Nome do Pet</th>
+            <th>Serviço</th>
         </thead>
 
         <tbody>
-            {{{tabela}}}
+            {{{#each agendamentos}}}
+            <tr>
+                <td>{{data}}</td>
+                <td>{{hora}}</td>
+                <td>{{nome}}</td>
+                <td>{{telefone}}</td>
+                <td>{{endereco}}</td>
+                <td>{{nome_do_pet}}</td>
+                <td>{{servico}}</td>
+            </tr>
+            {{{/each}}}
         </tbody>
     </table>
 </section>

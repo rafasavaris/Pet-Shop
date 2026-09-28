@@ -158,24 +158,7 @@ app.get("/listaPetAgenda", exigirAdmin, async (req, res) => {
 
   const agendamentos = await BD.collection("agendamentos").find({}).toArray();
 
-  let tabela = "";
-
-  for (let i = 0; i < agendamentos.length; i++) {
-    tabela +=
-      "<tr> <td>" +
-      agendamentos[i].data +
-      "</td>" +
-      "<td>" +
-      agendamentos[i].hora +
-      "</td>" +
-      "<td>" +
-      agendamentos[i].nome +
-      "</td>" +
-      "<td>" +
-      agendamentos[i].telefone +
-      "</td> </tr>";
-  }
-  res.render("admin/listaAgenda", { tabela });
+  res.render("admin/listaAgenda", { agendamentos });
 });
 
 app.post("/ajustaPetAgenda", exigirAdmin, async (req, res) => {
