@@ -4,23 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/style.css">
-    <title>Área administrativa | Pet Shop</title>
+    <title>Área administrativa</title>
 </head>
 <body>
     <section class="widget">
         <div class="agendamento-header">
             <h1>Área administrativa</h1>
-            <p>Olá, {{usuario}}! Escolha uma opção:</p>
+            <p>Olá! Escolha uma opção:</p>
         </div>
 
         <nav class="admin-nav">
             <a class="admin-link" href="/listaPetAgenda">Ver agendamentos</a>
             <a class="admin-link" href="/ajustaPetAgenda">Configurar agenda</a>
+            <a class="admin-link" href="/">Voltar para a página inicial</a>
         </nav>
-
-        <form action="/logout" method="POST">
-            <button type="submit">Sair</button>
-        </form>
     </section>
 </body>
 </html>
