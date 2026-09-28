@@ -33,6 +33,22 @@ body {
   margin: 10px 0;
 }
 
+.admin-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.admin-link {
+  background-color: #ffffff;
+  color: #851544;
+  border: 2px solid #851544;
+  border-radius: 5px;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+}
 button {
   background-color: #ffffff;
   color: #851544;

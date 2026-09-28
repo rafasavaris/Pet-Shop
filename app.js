@@ -166,13 +166,13 @@ app.get("/listaPetAgenda", exigirAdmin, async (req, res) => {
       agendamentos[i].data +
       "</td>" +
       "<td>" +
-      agendamentos[i].horario +
+      agendamentos[i].hora +
       "</td>" +
       "<td>" +
-      agendamentos[i].nomeCliente +
+      agendamentos[i].nome +
       "</td>" +
       "<td>" +
-      agendamentos[i].cpf +
+      agendamentos[i].telefone +
       "</td> </tr>";
   }
   res.render("admin/listaAgenda", { tabela });
