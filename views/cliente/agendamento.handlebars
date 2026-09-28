@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <title>Agendamento</title>
+        <link rel="stylesheet" href="/css/style.css">
+    </head>
+    
+    <body>
+        <section class="widget">
+        <div class="agendamento-header">
+            <h1>Agendamento de Banho e Tosa</h1>
+            <p>Agende seu serviço de banho e tosa para o seu pet</p>
+        </div>
+        <form class = "form" action="/agendamento" method="POST">
+            <div class="campo">
+                <label for="nome">Nome:</label>
+                <input type="text" name="nome" placeholder="Digite seu nome" required>
+            </div>
+            <div class="campo">
+                <label for="telefone">Telefone:</label>
+                <input type="text" name="telefone"  pattern="[0-9]{9}"    placeholder="Digite seu telefone"required>
+            </div>
+            <div class="campo">
+                <label for="cep">CEP:</label>
+                <input type="text" name="cep" id="cep" pattern="[0-9]{8}" placeholder="Digite seu CEP" required  >
+            </div>
+            <div class="campo">
+                <label for="rua">Rua:</label>
+                <input type="text" id="rua" placeholder="Rua" readonly required >
+            </div>
+            <div class="campo">
+                <label for="bairro">Bairro:</label>
+                <input type="text" id="bairro" placeholder="Bairro" readonly required >
+            </div>
+            <div class="campo">
+                <label for="numero">Número:</label>
+                <input type="text" id="numero" placeholder="Número" required >
+            </div>
+            <div class="campo">
+                <label for="complemento">Complemento:</label>
+                <input type="text" id="complemento" placeholder="Apartamento, casa, etc." >
+            </div>
+            <input type="hidden" name="endereco" id="endereco">
+            <div class="campo">
+                <label for="nome_do_pet">Nome do Pet:</label>
+                <input type="text" name="nome_do_pet" placeholder="Digite o nome do seu pet" required>
+            </div>
+            <div class="campo">
+                <label for="data">Data:</label>
+                <input type="date" name="data" id="data" required>
+            </div>
+
+            <div class="campo">
+                <label for="hora">Hora:</label>
+                <select name="hora" id="hora" required>
+                    <option value="">Selecione uma data primeiro</option>
+                </select>
+            </div>
+            <div class="campo">
+                <label for="servico">Serviço:</label>
+                <select name="servico">
+                    <option value="banho">Banho</option>
+                    <option value="tosa">Tosa</option>
+                    <option value="banho+tosa">Banho + Tosa</option>
+                </select>
+            </div>
+            <div>
+                <button type="submit">Agendar</button>
+            </div>
+
+        </form>
+        </section>
+        <script>
+            const data = document.getElementById("data");
+            const hora = document.getElementById("hora");
+
+            const cep = document.getElementById("cep");
+            const rua = document.getElementById("rua");
+            const bairro = document.getElementById("bairro");
+            const numero = document.getElementById("numero");
+            const complemento = document.getElementById("complemento");
+            const endereco = document.getElementById("endereco");
+
+
+            const hojeData = new Date().toISOString().split("T")[0];
+
+            data.min = hojeData;
+
+            cep.addEventListener("blur", async function() {
+
+                const valorCep = cep.value.replace(/\D/g, "");
+
+                if(valorCep.length !== 8) {
+                    alert("Digite um CEP válido.");
+                    return;
+                }
+
+                const resposta = await fetch(
+                    "https://viacep.com.br/ws/" + valorCep + "/json/"
+                );
+
+                const dados = await resposta.json();
+
+                if(dados.erro) {
+                    alert("CEP não encontrado.");
+                    return;
+                }
+
+                rua.value = dados.logradouro;
+                bairro.value = dados.bairro;
+            });
+
+            data.addEventListener("change", async function() {
+
+                hora.innerHTML = '<option value="">Carregando horários...</option>';
+
+                const resposta = await fetch("/horarios-disponiveis?data=" + data.value);
+
+                const horarios = await resposta.json();
+
+                hora.innerHTML = '<option value="">Selecione um horário</option>';
+
+                for(let i = 0; i < horarios.length; i++) {
+
+                    const horario = horarios[i];
+
+                    if(data.value === hojeData) {
+
+                        const horaAtual = new Date().getHours();
+
+                        if(Number(horario) <= horaAtual) {
+                            continue;
+                        }
+                    }
+
+                    hora.innerHTML +=
+                        '<option value="' + horario + '">' +
+                        horario + ':00' +
+                        '</option>';
+                }
+            });
+
+            document.querySelector(".form").addEventListener("submit", function() {
+
+                endereco.value =
+                    rua.value + ", " +
+                    numero.value + ", " +
+                    bairro.value;
+
+                if(complemento.value !== "") {
+                    endereco.value += ", " + complemento.value;
+                }
+            });
+        </script>
+                        
+    </body>
