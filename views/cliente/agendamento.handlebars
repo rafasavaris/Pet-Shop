@@ -70,6 +70,11 @@
             </div>
 
         </form>
+
+        <nav class="admin-nav">
+        <a class="admin-link" href="/">Voltar para a página inicial</a>
+        </nav>
+
         </section>
         <script>
             const data = document.getElementById("data");
@@ -121,6 +126,8 @@
 
                 hora.innerHTML = '<option value="">Selecione um horário</option>';
 
+                let quantidadeHorariosDisponiveis = 0;
+
                 for(let i = 0; i < horarios.length; i++) {
 
                     const horario = horarios[i];
@@ -138,6 +145,13 @@
                         '<option value="' + horario + '">' +
                         horario + ':00' +
                         '</option>';
+
+                    quantidadeHorariosDisponiveis++;
+                }
+
+                if(quantidadeHorariosDisponiveis === 0) {
+                    hora.innerHTML =
+                    '<option value="">Não há horários disponíveis para esta data</option>';
                 }
             });
 
@@ -155,3 +169,5 @@
         </script>
                         
     </body>
+
+     </html>
