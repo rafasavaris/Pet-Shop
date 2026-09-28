@@ -19,7 +19,7 @@ body {
   border-radius: 10px;
 }
 
-.agendamento-header {
+.agendamento-header, .lista-agenda-header, .msg-agenda-vazia, .config-agenda-header {
   text-align: center;
 }
 
@@ -65,4 +65,32 @@ select {
   border: 1px solid #ffffff;
   width: 100%;
   box-shadow: 1px 1px 1px 1px #000000;
+}
+
+.agenda-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 25px 0;
+}
+
+.agenda-table th {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 2px solid #851544;
+}
+
+.agenda-table td {
+    padding: 8px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.widget-lista-agenda {
+  max-width: 700px;
+  margin: 10px auto;
+  justify-content: center;
+  padding: 20px;
+  background-color: #ffffff;
+  color: #000000;
+  border-radius: 10px;
 }

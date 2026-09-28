@@ -1,38 +1,44 @@
 <link rel="stylesheet" href="/css/style.css">
 
-<section class="widget">
-    <h1>Agenda do Pet Shop!</h1>
+<section class="widget-lista-agenda">
+    <div class="lista-agenda-header">
+        <h1>Agenda</h1>
+    </div>
+    {{#if agendamentos.length}}
+        <table class="agenda-table">
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Horário</th>
+                    <th>Cliente</th>
+                    <th>Telefone</th>
+                    <th>Endereço</th>
+                    <th>Nome do Pet</th>
+                    <th>Serviço</th>
+                </tr>
+            </thead>
 
-    <table>
-        <thead>
-            <th>Data</th>
-            <th>Horário</th>
-            <th>Cliente</th>
-            <th>Telefone</th>
-            <th>Endereço</th>
-            <th>Nome do Pet</th>
-            <th>Serviço</th>
-        </thead>
-
-        <tbody>
-            {{{#each agendamentos}}}
-            <tr>
-                <td>{{data}}</td>
-                <td>{{hora}}</td>
-                <td>{{nome}}</td>
-                <td>{{telefone}}</td>
-                <td>{{endereco}}</td>
-                <td>{{nome_do_pet}}</td>
-                <td>{{servico}}</td>
-            </tr>
-            {{{/each}}}
-        </tbody>
-    </table>
+            <tbody>
+                {{#each agendamentos}}
+                <tr>
+                    <td>{{data}}</td>
+                    <td>{{hora}}</td>
+                    <td>{{nome}}</td>
+                    <td>{{telefone}}</td>
+                    <td>{{endereco}}</td>
+                    <td>{{nome_do_pet}}</td>
+                    <td>{{servico}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    {{else}}
+        <p class="msg-agenda-vazia">Não há agendamentos registrados.</p>
+    {{/if}}
 
     <nav class="admin-nav">
           <a class="admin-link" href="/admin">
               Voltar para a área administrativa
           </a>
-      </nav>
-      
+    </nav>
 </section>

@@ -8,17 +8,21 @@
 <body>
 
 <div class="widget">
-    <h1>Configuração da Agenda</h1>
+    <div class="config-agenda-header">
+        <h1>Configuração da agenda</h1>
+    </div>
 <form action="/ajustaPetAgenda" method="POST" class="form">
     <table>
         <thead>
-            <th>Horário</th>
-            <th>Segunda</th>
-            <th>Terça</th>
-            <th>Quarta</th>
-            <th>Quinta</th>
-            <th>Sexta</th>
-            <th>Sábado</th>
+            <tr>
+                <th>Horário</th>
+                <th>Segunda</th>
+                <th>Terça</th>
+                <th>Quarta</th>
+                <th>Quinta</th>
+                <th>Sexta</th>
+                <th>Sábado</th>
+            </tr>
         </thead>
 
         <tbody>
@@ -39,6 +43,11 @@
 
     <button type="submit">Salvar configurações</button>
 </form>
+    <nav class="admin-nav">
+        <a class="admin-link" href="/admin">
+            Voltar para a área administrativa
+        </a>
+    </nav>
 <div>
     
 </body>
