@@ -9,6 +9,10 @@
 
 <div class="widget">
     <h1>Configuração da Agenda</h1>
+    {{#if salvo}}
+    <p>Configuração da agenda salva com sucesso!</p>
+    {{/if}}
+    
 <form action="/ajustaPetAgenda" method="POST" class="form">
     <table>
         <thead>
@@ -39,6 +43,10 @@
 
     <button type="submit">Salvar configurações</button>
 </form>
+<nav class="admin-nav">
+      <a class="admin-link" href="/">Voltar para a página inicial</a>
+  </nav>
+
 <div>
     
 </body>
