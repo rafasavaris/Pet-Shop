@@ -89,6 +89,10 @@ app.get("/agendamento", async (req, res) => {
     });
   });
 
+app.get("/verAgenda", async (req, res) => {
+  res.render("cliente/verAgenda");
+});
+
 app.post("/agendamento", async (req, res) => {
   let { nome, telefone, endereco, nome_do_pet, servico, data, hora } = req.body;
 
