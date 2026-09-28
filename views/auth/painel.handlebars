@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Área administrativa | Pet Shop</title>
+</head>
+<body>
+    <h1>Olá, {{usuario}}!</h1>
+    <p>Você entrou com uma sessão autenticada armazenada no MongoDB.</p>
+
+    <nav>
+        <a href="/listaPetAgenda">Ver agendamentos</a>
+        <a href="/ajustaPetAgenda">Configurar agenda</a>
+    </nav>
+
+    <form action="/logout" method="POST">
+        <button type="submit">Sair</button>
+    </form>
+</body>
+</html>

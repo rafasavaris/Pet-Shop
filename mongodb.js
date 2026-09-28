@@ -1,4 +1,5 @@
 const { MongoClient } = require("mongodb");
+const bcrypt = require("bcryptjs");
 
 const cliente = new MongoClient("mongodb://localhost:50000");
 
@@ -35,8 +36,48 @@ async function iniciarAgenda() {
     }
 }
 
+async function iniciarUsuarios() {
+    const BD = getBD();
+    const usuarios = BD.collection("usuarios");
+
+    await usuarios.createIndex({ usuario: 1 }, { unique: true });
+
+    const existeUsuario = await usuarios.countDocuments({}, { limit: 1 });
+
+    if (existeUsuario > 0) {
+        return;
+    }
+
+    const usuario = process.env.ADMIN_USUARIO?.trim().toLowerCase();
+    const senha = process.env.ADMIN_SENHA;
+
+    if (!usuario || !senha) {
+        console.warn(
+            "Nenhum administrador cadastrado. Defina ADMIN_USUARIO e ADMIN_SENHA no .env e reinicie a aplicação."
+        );
+        return;
+    }
+
+    const senhaHash = await bcrypt.hash(senha, 12);
+
+    await usuarios.insertOne({
+        usuario,
+        senhaHash,
+        perfil: "admin",
+        ativo: true,
+        criadoEm: new Date()
+    });
+
+    console.log("Administrador inicial criado com sucesso.");
+}
+
 function getBD() {
     return BD;
 }
 
-module.exports = { iniciarBD, getBD, iniciarAgenda };
+module.exports = {
+    iniciarBD,
+    getBD,
+    iniciarAgenda,
+    iniciarUsuarios
+};
