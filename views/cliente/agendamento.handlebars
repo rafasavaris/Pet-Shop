@@ -12,6 +12,10 @@
             <h1>Agendamento de Banho e Tosa</h1>
             <p>Agende seu serviço de banho e tosa para o seu pet</p>
         </div>
+        {{#if cadastrado}}
+            <p>Agendamento cadastrado com sucesso!</p>
+        {{/if}}
+
         <form class = "form" action="/agendamento" method="POST">
             <div class="campo">
                 <label for="nome">Nome:</label>
@@ -72,6 +76,7 @@
         </form>
 
         <nav class="admin-nav">
+        <a class="admin-link" href="/verAgenda">Ver horários disponíveis</a>
         <a class="admin-link" href="/">Voltar para a página inicial</a>
         </nav>
 

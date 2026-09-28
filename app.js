@@ -54,18 +54,26 @@ app.post("/ajustaPetAgenda", async (req, res) => {
   await BD.collection("agenda").deleteMany({});
   await BD.collection("agenda").insertMany(configuracoes);
 
-  res.redirect("/ajustaPetAgenda");
+  res.redirect("/ajustaPetAgenda?salvo=1");
 });
 
 app.get("/ajustaPetAgenda", async (req, res) => {
   const BD = getBD();
   let configuracoes = await BD.collection("agenda").find({}).toArray();
 
-  res.render("admin/ajustaAgenda", { configuracoes });
-});
+  res.render("admin/ajustaAgenda", { 
+    configuracoes,
+  salvo: req.query.salvo === "1", });
+  });
 
 app.get("/agendamento", async (req, res) => {
-  res.render("cliente/agendamento");
+    res.render("cliente/agendamento", {
+      cadastrado: req.query.cadastrado === "1",
+    });
+  });
+
+app.get("/verAgenda", async (req, res) => {
+  res.render("cliente/verAgenda");
 });
 
 app.post("/agendamento", async (req, res) => {
@@ -123,7 +131,7 @@ app.post("/agendamento", async (req, res) => {
 
   await BD.collection("agendamentos").insertOne(registro);
 
-  res.send("Agendamento realizado com sucesso!");
+  res.redirect("/agendamento?cadastrado=1");
 });
 
 async function iniciarServidor() {
