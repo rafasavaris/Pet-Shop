@@ -70,7 +70,7 @@ app.post("/ajustaPetAgenda", async (req, res) => {
       sabado: Number(req.body["sab" + horario]),
     };
 
-    for (let j = 0; j < diasSemana.length; j++) {
+    for (let j = 1; j < diasSemana.length; j++) {
       const dia = diasSemana[j];
       const novaCapacidade = capacidades[dia];
       const agendamentos = await BD.collection("agendamentos").find({ hora: horario }).toArray();
