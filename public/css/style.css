@@ -86,7 +86,7 @@ select {
 }
 
 .widget-lista-agenda {
-  max-width: 700px;
+  max-width: 800px;
   margin: 10px auto;
   justify-content: center;
   padding: 20px;

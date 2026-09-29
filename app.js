@@ -39,25 +39,66 @@ app.get("/ajustaPetAgenda", async (req, res) => {
 
   res.render("admin/ajustaAgenda", { 
     configuracoes,
-    salvo: req.query.salvo === "1", });
-  });
+    salvo: req.query.salvo === "1", 
+    erro: req.query.erro === "1"});
+});
 
 app.post("/ajustaPetAgenda", async (req, res) => {
   const BD = getBD();
   const horarios = ["08", "09", "10", "11", "14", "15", "16", "17"];
+  const diasSemana = [
+    "domingo",
+    "segunda",
+    "terca",
+    "quarta",
+    "quinta",
+    "sexta",
+    "sabado",
+  ];
+
   const configuracoes = [];
 
   for (let i = 0; i < horarios.length; i++) {
     const horario = horarios[i];
 
-    configuracoes.push({
-      horario: horario,
+    const capacidades = {
       segunda: Number(req.body["seg" + horario]),
       terca: Number(req.body["ter" + horario]),
       quarta: Number(req.body["qua" + horario]),
       quinta: Number(req.body["qui" + horario]),
       sexta: Number(req.body["sex" + horario]),
       sabado: Number(req.body["sab" + horario]),
+    };
+
+    for (let j = 0; j < diasSemana.length; j++) {
+      const dia = diasSemana[j];
+      const novaCapacidade = capacidades[dia];
+      const agendamentos = await BD.collection("agendamentos").find({ hora: horario }).toArray();
+
+      let quantidadeAgendada = 0;
+
+      for (let k = 0; k < agendamentos.length; k++) {
+        const data = new Date(agendamentos[k].data + "T00:00:00");
+        const diaAgendamento = diasSemana[data.getDay()];
+
+        if (diaAgendamento === dia) {
+          quantidadeAgendada++;
+        }
+      }
+
+      if (novaCapacidade < quantidadeAgendada) {
+        return res.redirect("/ajustaPetAgenda?erro=1");
+      }
+    }
+
+    configuracoes.push({
+      horario: horario,
+      segunda: capacidades.segunda,
+      terca: capacidades.terca,
+      quarta: capacidades.quarta,
+      quinta: capacidades.quinta,
+      sexta: capacidades.sexta,
+      sabado: capacidades.sabado,
     });
   }
 

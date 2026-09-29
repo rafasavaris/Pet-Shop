@@ -2,7 +2,11 @@
     <div class="config-agenda-header">
         <h1>Configuração da Agenda</h1>
         {{#if salvo}}
-        <p>Configuração da agenda salva com sucesso!</p>
+            <p>Configuração da agenda salva com sucesso!</p>
+        {{else}}
+            {{#if erro}}
+                <p class="erro">Não é possível reduzir a capacidade de um horário que já possui agendamentos.</p>
+            {{/if}}
         {{/if}}
     </div>
 <form action="/ajustaPetAgenda" method="POST" class="form">
