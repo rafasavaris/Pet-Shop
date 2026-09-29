@@ -6,21 +6,38 @@ Sistema Web para agendamento de serviços de banho e tosa em um Pet Shop. Trabal
 
 ```text
 pet-shop/
-
-├── app.js
-├── package.json
 │
-├── database/
-│   └── database.js
+├── node_modules/
+│
+├── public/
+│   ├── css/
+│   │   └── style.css
+│   │
+│   └── images/
+│       └── favicon.ico
 │
 ├── views/
-│   ├── home.handlebars
-│   ├── agendamento.handlebars
-│   ├── listaPetAgenda.handlebars
-│   └── ajustaPetAgenda.handlebars
+│   ├── admin/
+│   │   ├── adminHome.handlebars
+│   │   ├── ajustaAgenda.handlebars
+│   │   └── listaAgenda.handlebars
+│   │
+│   ├── cliente/
+│   │   ├── agendamento.handlebars
+│   │   └── verAgenda.handlebars
+│   │
+│   ├── layouts/
+│   │   └── main.handlebars
+│   │
+│   └── public/
 │
-└── public/
-    └── style.css
+├── .env
+├── .gitignore
+├── app.js
+├── mongodb.js
+├── package.json
+├── package-lock.json
+└── README.md
 ```
 
 ## Como executar
