@@ -24,6 +24,7 @@ app.get("/", (req, res) => {
 app.get("/admin", async (req, res) => {
   res.render("admin/adminHome", { layout: false });
 });
+
 app.get("/listaPetAgenda", async (req, res) => {
   const BD = getBD();
 
@@ -31,6 +32,15 @@ app.get("/listaPetAgenda", async (req, res) => {
 
   res.render("admin/listaAgenda", { agendamentos });
 });
+
+app.get("/ajustaPetAgenda", async (req, res) => {
+  const BD = getBD();
+  let configuracoes = await BD.collection("agenda").find({}).toArray();
+
+  res.render("admin/ajustaAgenda", { 
+    configuracoes,
+    salvo: req.query.salvo === "1", });
+  });
 
 app.post("/ajustaPetAgenda", async (req, res) => {
   const BD = getBD();
@@ -56,15 +66,6 @@ app.post("/ajustaPetAgenda", async (req, res) => {
 
   res.redirect("/ajustaPetAgenda?salvo=1");
 });
-
-app.get("/ajustaPetAgenda", async (req, res) => {
-  const BD = getBD();
-  let configuracoes = await BD.collection("agenda").find({}).toArray();
-
-  res.render("admin/ajustaAgenda", { 
-    configuracoes,
-  salvo: req.query.salvo === "1", });
-  });
 
 app.get("/agendamento", async (req, res) => {
     res.render("cliente/agendamento", {
@@ -134,15 +135,6 @@ app.post("/agendamento", async (req, res) => {
   res.redirect("/agendamento?cadastrado=1");
 });
 
-async function iniciarServidor() {
-  await iniciarBD();
-  await iniciarAgenda();
-}
-
-app.listen(PORT, () => {
-  console.log(`Servidor rodando em http://localhost:${PORT}`);
-});
-
 app.get("/horarios-disponiveis", async (req, res) => {
   const BD = getBD();
 
@@ -191,6 +183,15 @@ app.get("/horarios-disponiveis", async (req, res) => {
   }
 
   res.json(horariosDisponiveis);
+});
+
+async function iniciarServidor() {
+  await iniciarBD();
+  await iniciarAgenda();
+}
+
+app.listen(PORT, () => {
+  console.log(`Servidor rodando em http://localhost:${PORT}`);
 });
 
 iniciarServidor();
