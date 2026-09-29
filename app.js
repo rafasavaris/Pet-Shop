@@ -94,7 +94,7 @@ app.get("/verAgenda", async (req, res) => {
 });
 
 app.post("/agendamento", async (req, res) => {
-  let { nome, telefone, endereco, nome_do_pet, servico, data, hora } = req.body;
+  let { nome, telefone, cpf, endereco, nome_do_pet, servico, data, hora } = req.body;
 
   const dataHoraEscolhida = new Date(data + "T" + hora + ":00");
 
@@ -133,12 +133,13 @@ app.post("/agendamento", async (req, res) => {
     })
     .toArray();
 
-  if (agendamentos.length >= quantidadeMaxima) {
+  if (agendamentos.length >= quantidadeMaxima){
     return res.send("Esse horário já está lotado.");
   }
 
   let registro = {};
   registro.nome = nome;
+  registro.cpf = cpf;
   registro.telefone = telefone;
   registro.endereco = endereco;
   registro.nome_do_pet = nome_do_pet;
